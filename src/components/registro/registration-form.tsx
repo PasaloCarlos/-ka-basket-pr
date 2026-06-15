@@ -121,11 +121,6 @@ export function RegistrationForm() {
               )}
             >
               <span className="block font-display text-2xl font-black text-foreground sm:text-3xl">{c.name}</span>
-              <span className="mt-1 block text-xs text-muted-foreground">
-                {c.rosterMin === c.rosterMax
-                  ? `${c.rosterMin} jug.`
-                  : `${c.rosterMin}–${c.rosterMax} jug.`}
-              </span>
             </button>
           ))}
         </div>
