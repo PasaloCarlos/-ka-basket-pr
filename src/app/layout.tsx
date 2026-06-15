@@ -20,6 +20,9 @@ const body = Hanken_Grotesk({
 export const metadata: Metadata = {
   title: `${event.brand.name} — Torneo de Baloncesto`,
   description: `${event.brand.coach}: ${event.brand.tagline}`,
+  // The site is already dark — tell the Dark Reader extension to stand down so it
+  // doesn't re-tint our palette or inject attributes that break hydration.
+  other: { "darkreader-lock": "ka-basket-pr" },
 };
 
 export const viewport: Viewport = {

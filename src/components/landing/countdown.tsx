@@ -23,15 +23,22 @@ const UNITS: { key: keyof ReturnType<typeof diff>; label: string }[] = [
 
 export function Countdown() {
   const target = event.details.date ? new Date(event.details.date).getTime() : null;
-  const [parts, setParts] = useState(() => (target ? diff(target, Date.now()) : null));
+  // Start null so SSR and the first client render agree; fill in after mount to
+  // avoid a hydration mismatch on the live (per-second) values.
+  const [parts, setParts] = useState<ReturnType<typeof diff> | null>(null);
 
   useEffect(() => {
     if (!target) return;
-    const id = setInterval(() => setParts(diff(target, Date.now())), 1000);
-    return () => clearInterval(id);
+    const update = () => setParts(diff(target, Date.now()));
+    const first = setTimeout(update, 0); // first value just after mount (in a callback, not sync)
+    const id = setInterval(update, 1000);
+    return () => {
+      clearTimeout(first);
+      clearInterval(id);
+    };
   }, [target]);
 
-  // Only render when a real date is configured.
+  // Renders nothing until a real date is configured and the timer has mounted.
   if (!target || !parts) return null;
 
   return (
