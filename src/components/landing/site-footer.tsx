@@ -37,7 +37,7 @@ export function SiteFooter() {
           <Link href="/equipos" className="hover:text-foreground">Consultar equipo</Link>
         </div>
         <p className="text-xs text-muted-foreground/60">
-          © {new Date().getFullYear()} {event.brand.name} · Hecho en Puerto Rico 🏀
+          © {new Date().getFullYear()} {event.brand.name} · Hecho en el Este de Puerto Rico 🏀
         </p>
       </div>
     </footer>
