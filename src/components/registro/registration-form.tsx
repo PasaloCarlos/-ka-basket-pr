@@ -33,6 +33,8 @@ export function RegistrationForm() {
   const category = event.categories.find((c) => c.slug === categorySlug)!;
   const slots = Array.from({ length: category.rosterMax });
   const brackets = event.divisions[division].brackets;
+  const playerNoun = division === "female" ? "Jugadora" : "Jugador";
+  const playerNounPlural = division === "female" ? "jugadoras" : "jugadores";
 
   function onDivisionChange(value: DivisionKey) {
     setDivision(value);
@@ -210,8 +212,8 @@ export function RegistrationForm() {
         </legend>
         <p className="mb-3 text-sm text-muted-foreground">
           {category.rosterMin === category.rosterMax
-            ? `Ingresa ${category.rosterMin} jugador(es).`
-            : `Ingresa entre ${category.rosterMin} y ${category.rosterMax} jugadores. Los espacios extra son opcionales.`}
+            ? `Ingresa ${category.rosterMin} ${category.rosterMin === 1 ? playerNoun.toLowerCase() : playerNounPlural}.`
+            : `Ingresa entre ${category.rosterMin} y ${category.rosterMax} ${playerNounPlural}. Los espacios extra son opcionales.`}
         </p>
         <div className="space-y-3">
           {slots.map((_, i) => (
@@ -224,7 +226,9 @@ export function RegistrationForm() {
                 required={i < category.rosterMin}
                 maxLength={80}
                 placeholder={
-                  i < category.rosterMin ? `Jugador ${i + 1} *` : `Jugador ${i + 1} (opcional)`
+                  i < category.rosterMin
+                    ? `${playerNoun} ${i + 1} *`
+                    : `${playerNoun} ${i + 1} (opcional)`
                 }
               />
             </div>
