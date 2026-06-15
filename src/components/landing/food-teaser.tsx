@@ -13,9 +13,6 @@ export function FoodTeaser() {
           <p className="mt-4 font-display text-2xl uppercase tracking-wide text-primary">
             {event.food.teaser}
           </p>
-          <p className="mx-auto mt-4 max-w-md text-sm text-muted-foreground">
-            Estamos preparando un menú.
-          </p>
         </div>
       </div>
     </section>
