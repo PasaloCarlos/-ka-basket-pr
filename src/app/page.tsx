@@ -11,7 +11,7 @@ import { SiteFooter } from "@/components/landing/site-footer";
 
 export default function HomePage() {
   return (
-    <main className="relative">
+    <main className="relative pb-20 sm:pb-0">
       {/* Sticky top bar */}
       <nav className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
@@ -23,7 +23,7 @@ export default function HomePage() {
               height={36}
               className="rounded-md ring-1 ring-primary/40"
             />
-            <span className="font-display text-lg font-black uppercase tracking-wide">
+            <span className="hidden font-display text-lg font-black uppercase tracking-wide min-[380px]:inline">
               {event.brand.name}
             </span>
           </Link>
@@ -47,6 +47,13 @@ export default function HomePage() {
       <EventInfo />
       <FoodTeaser />
       <SiteFooter />
+
+      {/* Persistent thumb-reach CTA — phones only */}
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border/60 bg-background/90 p-3 backdrop-blur-md sm:hidden">
+        <Link href="/registro" className={buttonVariants({ size: "lg", className: "w-full" })}>
+          Inscribe tu equipo
+        </Link>
+      </div>
     </main>
   );
 }

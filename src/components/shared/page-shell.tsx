@@ -33,7 +33,7 @@ export function PageShell({
         {eyebrow && (
           <p className="font-display text-sm uppercase tracking-[0.3em] text-primary">{eyebrow}</p>
         )}
-        <h1 className="mt-2 font-display text-5xl font-black uppercase sm:text-6xl">{title}</h1>
+        <h1 className="mt-2 font-display text-4xl font-black uppercase sm:text-6xl">{title}</h1>
         {intro && <p className="mx-auto mt-4 max-w-md text-muted-foreground">{intro}</p>}
       </header>
 

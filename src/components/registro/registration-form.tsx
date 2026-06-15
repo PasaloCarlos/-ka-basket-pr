@@ -101,7 +101,7 @@ export function RegistrationForm() {
                   : "border-border bg-card/60 hover:border-primary/50"
               )}
             >
-              <span className="block font-display text-3xl font-black text-foreground">{c.name}</span>
+              <span className="block font-display text-2xl font-black text-foreground sm:text-3xl">{c.name}</span>
               <span className="mt-1 block text-xs text-muted-foreground">
                 {c.rosterMin === c.rosterMax
                   ? `${c.rosterMin} jug.`

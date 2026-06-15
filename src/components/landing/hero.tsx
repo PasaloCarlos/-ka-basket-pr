@@ -47,14 +47,14 @@ export function Hero() {
           {event.brand.instagramHandle}
         </Link>
 
-        <h1 className="text-balance font-display text-6xl font-black sm:text-8xl">
+        <h1 className="font-display font-black leading-[0.9] text-[clamp(2.75rem,13vw,7rem)]">
           <span className="block text-foreground">Torneo de</span>
           <span className="block text-primary drop-shadow-[0_0_30px_oklch(0.685_0.181_47_/_0.5)]">
             Baloncesto
           </span>
         </h1>
 
-        <p className="mt-4 font-display text-xl uppercase tracking-wide text-foreground/90 sm:text-2xl">
+        <p className="mt-4 font-display text-lg uppercase tracking-wide text-foreground/90 sm:text-2xl">
           1 vs 1 · 2 vs 2 · 5 vs 5
         </p>
 
@@ -71,11 +71,14 @@ export function Hero() {
         </div>
 
         {/* CTAs */}
-        <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-          <Link href="/registro" className={buttonVariants({ size: "lg" })}>
+        <div className="mt-10 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+          <Link href="/registro" className={buttonVariants({ size: "lg", className: "w-full sm:w-auto" })}>
             Inscribe tu equipo
           </Link>
-          <Link href="/equipos" className={buttonVariants({ variant: "outline", size: "lg" })}>
+          <Link
+            href="/equipos"
+            className={buttonVariants({ variant: "outline", size: "lg", className: "w-full sm:w-auto" })}
+          >
             Consulta tu inscripción
           </Link>
         </div>
