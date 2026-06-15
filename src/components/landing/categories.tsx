@@ -28,9 +28,7 @@ export function Categories() {
               <h3 className="font-display text-5xl font-black text-foreground">{cat.name}</h3>
               <p className="mt-3 min-h-[3rem] text-sm text-muted-foreground">{cat.blurb}</p>
               <p className="mt-4 font-display text-xs uppercase tracking-widest text-primary">
-                {cat.rosterMin === cat.rosterMax
-                  ? `${cat.rosterMin} jugador(es)`
-                  : `${cat.rosterMin}–${cat.rosterMax} jugadores`}
+                {cat.detail}
               </p>
               <Link
                 href={`/registro?cat=${cat.slug}`}

@@ -45,10 +45,12 @@ export const event = {
   },
 
   // Las categorías controlan el tamaño del roster en el formulario.
+  // `blurb` = descripción de la tarjeta · `detail` = línea de detalle.
+  // rosterMin/rosterMax SÍ se usan para validar el formulario — no los borres.
   categories: [
-    { slug: "1v1" as CategoryFormat, name: "1 vs 1", rosterMin: 1, rosterMax: 1, blurb: "Mano a mano. Pura técnica." },
-    { slug: "2v2" as CategoryFormat, name: "2 vs 2", rosterMin: 2, rosterMax: 3, blurb: "Tú y tu dúo. Hasta un suplente." },
-    { slug: "5v5" as CategoryFormat, name: "5 vs 5", rosterMin: 5, rosterMax: 8, blurb: "El equipo completo en la cancha." },
+    { slug: "1v1" as CategoryFormat, name: "1 vs 1", rosterMin: 1, rosterMax: 1, blurb: "Poner descripción aquí.", detail: "Detalle aquí." },
+    { slug: "2v2" as CategoryFormat, name: "2 vs 2", rosterMin: 2, rosterMax: 3, blurb: "Poner descripción aquí.", detail: "Detalle aquí." },
+    { slug: "5v5" as CategoryFormat, name: "5 vs 5", rosterMin: 5, rosterMax: 8, blurb: "Poner descripción aquí.", detail: "Detalle aquí." },
   ],
 
   divisions: {

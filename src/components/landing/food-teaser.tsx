@@ -14,8 +14,7 @@ export function FoodTeaser() {
             {event.food.teaser}
           </p>
           <p className="mx-auto mt-4 max-w-md text-sm text-muted-foreground">
-            Estamos preparando un menú para que recargues energías entre juego y juego. Sigue{" "}
-            {event.brand.instagramHandle} para el anuncio.
+            Estamos preparando un menú.
           </p>
         </div>
       </div>

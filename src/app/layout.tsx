@@ -20,7 +20,8 @@ const body = Hanken_Grotesk({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"),
   title: `${event.brand.name} — Torneo de Baloncesto`,
-  description: `${event.brand.coach}: ${event.brand.tagline}`,
+  description:
+    "Torneo de baloncesto en Puerto Rico — 1v1, 2v2 y 5v5. Femenino de todas las edades y categoría masculina. Inscribe tu equipo.",
   // The site is already dark — tell the Dark Reader extension to stand down so it
   // doesn't re-tint our palette or inject attributes that break hydration.
   other: { "darkreader-lock": "ka-basket-pr" },

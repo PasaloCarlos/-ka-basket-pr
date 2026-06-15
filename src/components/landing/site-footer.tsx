@@ -10,7 +10,6 @@ export function SiteFooter() {
         <p className="font-display text-3xl font-black uppercase text-foreground">
           {event.brand.name}
         </p>
-        <p className="max-w-md text-sm text-muted-foreground">{event.brand.tagline}</p>
         <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
           <Link
             href={event.brand.instagram}

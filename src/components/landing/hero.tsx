@@ -60,7 +60,7 @@ export function Hero() {
 
         <p className="mt-6 max-w-2xl text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg">
           Un torneo para jugadoras de <span className="text-foreground">todas las edades</span> —
-          con categoría masculina abierta. {event.brand.tagline}
+          con categoría masculina abierta.
         </p>
 
         {/* Detail chips */}
