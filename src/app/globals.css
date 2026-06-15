@@ -1,0 +1,133 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
+  --font-heading: var(--font-display);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-court: var(--court);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+}
+
+:root {
+  /* ====== NIGHT-COURT PALETTE — black canvas, basketball orange, white ======
+     Applied values; documented mirror in src/config/event.config.ts (theme). */
+  --background: oklch(0.06 0 0);                /* #0a0a0a near-black court */
+  --foreground: oklch(0.98 0 0);                /* #fafafa white */
+  --card: oklch(0.12 0.004 60);                 /* #161514 raised panel */
+  --card-foreground: oklch(0.98 0 0);
+  --popover: oklch(0.12 0.004 60);
+  --popover-foreground: oklch(0.98 0 0);
+  --primary: oklch(0.685 0.181 47);             /* #F26722 basketball orange */
+  --primary-foreground: oklch(0.08 0.02 50);    /* near-black ink on orange */
+  --secondary: oklch(0.18 0.006 60);            /* charcoal */
+  --secondary-foreground: oklch(0.98 0 0);
+  --muted: oklch(0.16 0.004 60);
+  --muted-foreground: oklch(0.66 0.01 60);      /* warm gray */
+  --accent: oklch(0.685 0.181 47);
+  --accent-foreground: oklch(0.08 0.02 50);
+  --destructive: oklch(0.62 0.21 25);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 16%);
+  --ring: oklch(0.685 0.181 47);                /* orange focus ring */
+  --court: oklch(0.685 0.181 47 / 0.5);         /* court-line tint */
+  --radius: 0.75rem;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans overflow-x-hidden;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    /* Floodlight glow + faint court arcs behind everything */
+    background-image:
+      radial-gradient(1100px 600px at 50% -10%, oklch(0.685 0.181 47 / 0.16) 0%, transparent 60%),
+      radial-gradient(900px 500px at 100% 10%, oklch(0.685 0.181 47 / 0.07) 0%, transparent 55%);
+    background-attachment: fixed;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display), "Arial Narrow", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    line-height: 0.92;
+  }
+}
+
+@layer utilities {
+  /* Grain overlay — paint on a fixed pseudo-layer via .grain on <body> wrapper */
+  .grain::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Court half-line / key arc motif (subtle, decorative) */
+  .court-lines {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600' viewBox='0 0 600 600'%3E%3Cg fill='none' stroke='%23F26722' stroke-width='1.2' opacity='0.07'%3E%3Ccircle cx='300' cy='0' r='120'/%3E%3Ccircle cx='300' cy='0' r='200'/%3E%3Cline x1='0' y1='0' x2='600' y2='0'/%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: top center;
+  }
+
+  .text-stroke {
+    -webkit-text-stroke: 1.5px var(--primary);
+    color: transparent;
+  }
+
+  .glow-orange {
+    box-shadow: 0 0 0 1px oklch(0.685 0.181 47 / 0.35), 0 18px 50px -12px oklch(0.685 0.181 47 / 0.45);
+  }
+
+  /* Staggered entrance */
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fade-up { animation: fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+  .stagger > * { animation: fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+  .stagger > *:nth-child(1) { animation-delay: 0ms; }
+  .stagger > *:nth-child(2) { animation-delay: 80ms; }
+  .stagger > *:nth-child(3) { animation-delay: 160ms; }
+  .stagger > *:nth-child(4) { animation-delay: 240ms; }
+  .stagger > *:nth-child(5) { animation-delay: 320ms; }
+  .stagger > *:nth-child(6) { animation-delay: 400ms; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-fade-up,
+    .stagger > * { animation: none; }
+    html { scroll-behavior: auto; }
+  }
+}

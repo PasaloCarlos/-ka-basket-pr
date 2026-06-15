@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="14" fill="#0a0a0a"/>
+  <circle cx="32" cy="34" r="15" fill="#F26722"/>
+  <g stroke="#0a0a0a" stroke-width="2" fill="none">
+    <line x1="17" y1="34" x2="47" y2="34"/>
+    <line x1="32" y1="19" x2="32" y2="49"/>
+    <path d="M22 21 Q32 34 22 47"/>
+    <path d="M42 21 Q32 34 42 47"/>
+  </g>
+  <text x="32" y="15" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="14" font-weight="900" fill="#ffffff">KA</text>
+</svg>
