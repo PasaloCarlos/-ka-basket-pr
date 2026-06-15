@@ -22,7 +22,7 @@ export const event = {
     logo: "/logo-ka.jpg",
     // Canal de preguntas por WhatsApp. Incluye el código de país (1 para PR);
     // whatsappUrl() le quita todo lo que no sea dígito. null = oculta el botón.
-    whatsapp: "1 (939) 322-5639" as string | null,
+    whatsapp: "1 (939) 332-5639" as string | null,
     whatsappMessage: "¡Hola! Tengo una pregunta sobre el torneo de baloncesto 🏀",
   },
 
