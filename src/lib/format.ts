@@ -27,3 +27,10 @@ export function locationLabel(): string {
 export function priceLabel(): string {
   return event.details.price ?? event.details.priceLabel;
 }
+
+// Builds a wa.me link from the configured number, or null if not set.
+export function whatsappUrl(): string | null {
+  const digits = (event.brand.whatsapp ?? "").replace(/\D/g, "");
+  if (!digits) return null;
+  return `https://wa.me/${digits}?text=${encodeURIComponent(event.brand.whatsappMessage)}`;
+}

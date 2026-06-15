@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { event } from "@/config/event.config";
-import { InstagramIcon } from "@/components/shared/icons";
+import { InstagramIcon, WhatsAppIcon } from "@/components/shared/icons";
+import { whatsappUrl } from "@/lib/format";
 
 export function SiteFooter() {
   return (
@@ -10,15 +11,28 @@ export function SiteFooter() {
           {event.brand.name}
         </p>
         <p className="max-w-md text-sm text-muted-foreground">{event.brand.tagline}</p>
-        <Link
-          href={event.brand.instagram}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 font-display text-sm uppercase tracking-widest text-primary transition-colors hover:text-foreground"
-        >
-          <InstagramIcon className="size-4" />
-          {event.brand.instagramHandle}
-        </Link>
+        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
+          <Link
+            href={event.brand.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 font-display text-sm uppercase tracking-widest text-primary transition-colors hover:text-foreground"
+          >
+            <InstagramIcon className="size-4" />
+            {event.brand.instagramHandle}
+          </Link>
+          {whatsappUrl() && (
+            <Link
+              href={whatsappUrl()!}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 font-display text-sm uppercase tracking-widest text-primary transition-colors hover:text-foreground"
+            >
+              <WhatsAppIcon className="size-4" />
+              Escríbenos por WhatsApp
+            </Link>
+          )}
+        </div>
         <div className="flex gap-5 font-display text-xs uppercase tracking-widest text-muted-foreground">
           <Link href="/registro" className="hover:text-foreground">Inscripción</Link>
           <Link href="/equipos" className="hover:text-foreground">Consultar equipo</Link>

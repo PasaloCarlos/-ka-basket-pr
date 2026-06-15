@@ -20,6 +20,10 @@ export const event = {
     tagline:
       "Entrenadora, jugadora y árbitro de baloncesto. Clínicas individualizadas. Desarrollando el valor del deporte en la niñez y juventud de Puerto Rico.",
     logo: "/logo-ka.jpg",
+    // Canal de preguntas por WhatsApp. Solo dígitos con código de país,
+    // ej. "17875551234". Déjalo en null para ocultar el botón de WhatsApp.
+    whatsapp: null as string | null,
+    whatsappMessage: "¡Hola! Tengo una pregunta sobre el torneo de baloncesto 🏀",
   },
 
   // Detalles del evento. Deja en `null` lo que aún no esté confirmado.

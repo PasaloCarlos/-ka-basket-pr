@@ -7,6 +7,8 @@ import { toast } from "sonner";
 import { CheckCircle2, Copy } from "lucide-react";
 import { event, type DivisionKey } from "@/config/event.config";
 import { registerTeam } from "@/actions/registrations";
+import { whatsappUrl } from "@/lib/format";
+import { WhatsAppIcon } from "@/components/shared/icons";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -68,12 +70,27 @@ export function RegistrationForm() {
           {success}
           <Copy className="size-5 text-muted-foreground" />
         </button>
-        <p className="mt-3 text-sm text-muted-foreground">{event.details.paymentNote}</p>
+        <div className="mt-6 rounded-xl border border-border bg-secondary/40 px-5 py-4 text-left text-sm text-muted-foreground">
+          <p className="font-display text-xs uppercase tracking-widest text-primary">Próximos pasos</p>
+          <ul className="mt-2 space-y-1.5">
+            <li>📌 Guarda tu código y <span className="text-foreground">preséntalo en la entrada</span> el día del evento.</li>
+            <li>💵 {event.details.paymentNote}</li>
+            {whatsappUrl() && <li>💬 Te contactaremos por WhatsApp para confirmar tu equipo.</li>}
+          </ul>
+        </div>
+
         <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:justify-center">
           <Link href={`/equipos?code=${success}`}>
-            <Button>Ver estado de mi equipo</Button>
+            <Button className="w-full sm:w-auto">Ver estado de mi equipo</Button>
           </Link>
-          <Button variant="outline" onClick={() => setSuccess(null)}>
+          {whatsappUrl() && (
+            <Link href={whatsappUrl()!} target="_blank" rel="noopener noreferrer">
+              <Button variant="secondary" className="w-full sm:w-auto">
+                <WhatsAppIcon className="size-4" /> Escríbenos
+              </Button>
+            </Link>
+          )}
+          <Button variant="outline" className="w-full sm:w-auto" onClick={() => setSuccess(null)}>
             Inscribir otro equipo
           </Button>
         </div>

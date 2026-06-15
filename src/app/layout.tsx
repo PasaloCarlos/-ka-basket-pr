@@ -18,11 +18,20 @@ const body = Hanken_Grotesk({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"),
   title: `${event.brand.name} — Torneo de Baloncesto`,
   description: `${event.brand.coach}: ${event.brand.tagline}`,
   // The site is already dark — tell the Dark Reader extension to stand down so it
   // doesn't re-tint our palette or inject attributes that break hydration.
   other: { "darkreader-lock": "ka-basket-pr" },
+  // og:image is auto-wired from app/opengraph-image.tsx; this fills the rest of the card.
+  openGraph: {
+    title: `${event.brand.name} — Torneo de Baloncesto`,
+    description: `Torneo de baloncesto 1v1 · 2v2 · 5v5 en Puerto Rico. ${event.details.paymentNote}`,
+    type: "website",
+    locale: "es_PR",
+  },
+  twitter: { card: "summary_large_image" },
 };
 
 export const viewport: Viewport = {
