@@ -17,10 +17,13 @@ function MatchCard({ m }: { m: PublicMatch }) {
   if (m.is_bye) {
     return (
       <article className="rounded-xl border border-border/60 bg-card/40 px-4 py-2.5 text-sm text-muted-foreground">
-        {m.team1_name ?? m.team2_name} avanza (bye)
+        {m.team1_name ?? m.team2_name ?? "Por definir"} avanza (bye)
       </article>
     );
   }
+  // Winner is matched by name because the public shape carries only names (no ids).
+  // If two teams shared an identical name both rows would highlight — acceptable for
+  // this event app; team names are effectively unique in practice.
   return (
     <article className="space-y-1.5 rounded-xl border border-border bg-card/70 px-4 py-3">
       <MatchRow name={m.team1_name} score={m.score1} winner={!!m.winner_name && m.winner_name === m.team1_name} />
@@ -33,6 +36,16 @@ function MatchCard({ m }: { m: PublicMatch }) {
 export function BracketView({ bracket }: { bracket: PublicBracket }) {
   const totalRounds = bracket.matches.length ? Math.max(...bracket.matches.map((m) => m.round)) : 0;
   const rounds = [...new Set(bracket.matches.map((m) => m.round))].sort((a, b) => a - b);
+
+  // Published but not yet generated (no matches): show a placeholder, not a blank card.
+  if (bracket.matches.length === 0) {
+    return (
+      <div className="rounded-2xl border border-border bg-card/40 p-5 sm:p-7">
+        <h3 className="font-display text-2xl font-black uppercase sm:text-3xl">{bracket.name}</h3>
+        <p className="mt-3 text-sm text-muted-foreground">El bracket se publicará pronto.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="rounded-2xl border border-border bg-card/40 p-5 sm:p-7">
