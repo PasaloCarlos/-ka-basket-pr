@@ -71,6 +71,7 @@ export async function confirmTeam(teamId: string, status: RegistrationStatus) {
   const { error } = await supabase.from("teams").update({ status }).eq("id", teamId);
   if (error) throw new Error("Error al actualizar el estado.");
   revalidatePath("/admin");
+  revalidatePath("/"); // cancelar/reactivar cambia el contador público
 }
 
 export async function setPaid(teamId: string, paid: boolean) {
@@ -89,4 +90,5 @@ export async function deleteTeam(teamId: string) {
   const { error } = await supabase.from("teams").delete().eq("id", teamId);
   if (error) throw new Error("Error al eliminar el equipo.");
   revalidatePath("/admin");
+  revalidatePath("/"); // eliminar baja el contador público
 }

@@ -93,6 +93,7 @@ export async function registerTeam(formData: FormData): Promise<RegisterResult> 
   }
 
   revalidatePath("/admin");
+  revalidatePath("/"); // refresca el contador de equipos en la landing
   return { ok: true, lookupCode: team.lookup_code };
 }
 

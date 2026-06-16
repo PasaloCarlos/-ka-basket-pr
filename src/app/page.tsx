@@ -7,9 +7,13 @@ import { Countdown } from "@/components/landing/countdown";
 import { Categories } from "@/components/landing/categories";
 import { EventInfo } from "@/components/landing/event-info";
 import { FoodTeaser } from "@/components/landing/food-teaser";
+import { Sponsors } from "@/components/landing/sponsors";
 import { SiteFooter } from "@/components/landing/site-footer";
+import { getCategoryCounts } from "@/lib/stats";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const counts = await getCategoryCounts();
+
   return (
     <main className="relative pb-20 sm:pb-0">
       {/* Sticky top bar */}
@@ -43,9 +47,10 @@ export default function HomePage() {
 
       <Hero />
       <Countdown />
-      <Categories />
+      <Categories counts={counts} />
       <EventInfo />
       <FoodTeaser />
+      <Sponsors />
       <SiteFooter />
 
       {/* Persistent thumb-reach CTA — phones only */}

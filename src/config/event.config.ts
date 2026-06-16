@@ -69,6 +69,26 @@ export const event = {
     teaser: "Pronto revelaremos el menú.",
   },
 
+  // Contador de equipos inscritos por categoría (prueba social + urgencia).
+  // El conteo sale de la base de datos; estas son solo las etiquetas.
+  counter: {
+    enabled: true,
+    scarcityLabel: "cupos limitados", // se muestra junto al conteo
+    emptyLabel: "Sé el primer equipo", // cuando aún no hay inscritos
+    oneLabel: "equipo inscrito",
+    manyLabel: "equipos inscritos",
+  },
+
+  // Auspiciadores. Pon los logos en public/sponsors/ y referéncialos aquí.
+  // Mientras `items` esté vacío, se muestra una invitación a auspiciar.
+  sponsors: {
+    enabled: true,
+    title: "Auspiciadores",
+    intro: "Gracias a quienes hacen posible este torneo.",
+    ctaText: "¿Quieres auspiciar este evento?",
+    items: [] as { name: string; logo: string; url?: string | null }[],
+  },
+
   countdown: { enabled: true }, // sólo se muestra si details.date tiene valor
 
   // Tokens de marca (documentación / reuso en TS).
