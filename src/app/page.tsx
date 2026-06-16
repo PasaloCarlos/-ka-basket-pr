@@ -32,6 +32,14 @@ export default async function HomePage() {
             </span>
           </Link>
           <div className="flex items-center gap-2">
+            {event.tournament.enabled && (
+              <Link
+                href="/torneo"
+                className="hidden font-display text-sm uppercase tracking-widest text-muted-foreground hover:text-foreground sm:inline"
+              >
+                {event.tournament.navLabel}
+              </Link>
+            )}
             <Link
               href="#categorias"
               className="hidden font-display text-sm uppercase tracking-widest text-muted-foreground hover:text-foreground sm:inline"
