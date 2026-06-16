@@ -61,12 +61,16 @@ describe("generateSingleElim", () => {
     const byes = m.filter((x) => x.isBye);
     expect(byes).toHaveLength(1);
     expect(byes[0].winnerTeamId).toBe("t1");
+    // every non-bye match keeps a null winner until played
+    expect(m.filter((x) => !x.isBye && x.winnerTeamId != null)).toHaveLength(0);
   });
 
-  it("creates 7 matches and 3 byes for 5 teams", () => {
+  it("creates 7 matches and 3 byes for 5 teams, byes to the top seeds", () => {
     const m = generateSingleElim(seeds(5));
     expect(m).toHaveLength(7);
-    expect(m.filter((x) => x.isBye)).toHaveLength(3);
+    const byes = m.filter((x) => x.isBye);
+    expect(byes).toHaveLength(3);
+    expect(byes.map((x) => x.winnerTeamId).sort()).toEqual(["t1", "t2", "t3"]);
     expect(Math.max(...m.map((x) => x.round))).toBe(3);
   });
 

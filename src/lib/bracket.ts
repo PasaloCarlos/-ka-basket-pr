@@ -29,6 +29,7 @@ export function nextPowerOfTwo(n: number): number {
 // Standard bracket seeding sequence for `size` slots (values 1..size), arranged
 // so consecutive pairs are the round-1 matchups and seed 1 cannot meet seed 2
 // before the final. e.g. size 4 -> [1,4,2,3]; size 8 -> [1,8,4,5,2,7,3,6].
+// `size` must be a power of two (callers pass nextPowerOfTwo(n)).
 export function seedOrder(size: number): number[] {
   let pols = [1, 2];
   while (pols.length < size) {
@@ -43,6 +44,7 @@ export function seedOrder(size: number): number[] {
   return pols;
 }
 
+// Named up to 4-round brackets (≤ 16 teams). Deeper rounds fall back to "Ronda N".
 const FINAL_LABELS = ["Final", "Semifinal", "Cuartos", "Octavos"];
 
 export function roundLabel(round: number, totalRounds: number): string {
