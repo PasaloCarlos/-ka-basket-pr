@@ -97,6 +97,7 @@ export function BracketsAdmin({ brackets }: { brackets: AdminBracketRow[] }) {
                 <Button
                   size="sm"
                   variant="destructive"
+                  aria-label={`Eliminar bracket ${b.name}`}
                   disabled={pending}
                   onClick={() => {
                     if (confirm(`¿Eliminar el bracket "${b.name}"?`)) {

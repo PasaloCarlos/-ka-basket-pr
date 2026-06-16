@@ -173,7 +173,14 @@ export function BracketManager({
                     .slice()
                     .sort((a, b) => a.position - b.position)
                     .map((m) => (
-                      <MatchAdminCard key={m.id} match={m} pending={pending} act={act} />
+                      // key includes scores so the card remounts (resetting its
+                      // local input state) whenever a result is recorded or cleared.
+                      <MatchAdminCard
+                        key={`${m.id}-${m.score1 ?? "x"}-${m.score2 ?? "x"}`}
+                        match={m}
+                        pending={pending}
+                        act={act}
+                      />
                     ))}
                 </div>
               </div>
