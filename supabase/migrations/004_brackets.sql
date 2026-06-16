@@ -20,6 +20,10 @@ create table public.brackets (
 );
 
 -- Seeding scratchpad: the curated, ordered participant list (draft stage).
+-- team_id is ON DELETE CASCADE (not RESTRICT) on purpose: this is pre-generation
+-- scratch, and we must not make the existing deleteTeam admin action fail with an
+-- FK error. The durable tree (bracket_matches) carries name snapshots + SET NULL,
+-- so deleting a team never corrupts a generated bracket.
 create table public.bracket_teams (
   bracket_id uuid not null references public.brackets(id) on delete cascade,
   team_id uuid not null references public.teams(id) on delete cascade,
@@ -43,7 +47,7 @@ create table public.bracket_matches (
   winner_team_id uuid references public.teams(id) on delete set null,
   winner_name text,
   next_match_id uuid references public.bracket_matches(id) on delete set null,
-  next_slot int,                      -- 1 or 2
+  next_slot int check (next_slot in (1, 2)), -- which side of next_match
   is_bye boolean not null default false,
   created_at timestamptz default now(),
   updated_at timestamptz default now()
