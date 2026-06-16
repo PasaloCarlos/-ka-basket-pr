@@ -245,6 +245,19 @@ export async function recordResult(matchId: string, score1: number, score2: numb
   if (!m.team1_id || !m.team2_id) throw new Error("Faltan equipos en este partido.");
   if (score1 < 0 || score2 < 0) throw new Error("Marcador inválido.");
 
+  // Don't let a re-record corrupt an already-advanced tree: if the next match
+  // already has a winner, the admin must clear it forward first (mirrors clearResult).
+  if (m.next_match_id) {
+    const { data: next } = await supabase
+      .from("bracket_matches")
+      .select("winner_team_id")
+      .eq("id", m.next_match_id)
+      .maybeSingle();
+    if (next?.winner_team_id) {
+      throw new Error("Primero borra el resultado del partido siguiente.");
+    }
+  }
+
   let winningSlot: 1 | 2;
   try {
     winningSlot = applyResult(score1, score2);
