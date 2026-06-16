@@ -12,6 +12,10 @@ export const metadata = {
   description: event.tournament.pageIntro,
 };
 
+// Live during the event — always reflect the latest published brackets/results
+// (matches the admin pages; avoids any static/ISR staleness while games run).
+export const dynamic = "force-dynamic";
+
 function RulesBlock({ body }: { body: string }) {
   const lines = body.split("\n");
   return (
