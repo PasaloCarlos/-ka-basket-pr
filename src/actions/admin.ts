@@ -4,15 +4,9 @@ import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { signSession, verifySession, ADMIN_COOKIE } from "@/lib/admin-session";
+import { signSession, ADMIN_COOKIE } from "@/lib/admin-session";
+import { requireAdmin } from "@/lib/admin-guard";
 import type { RegistrationStatus, TeamWithDetails } from "@/types";
-
-async function requireAdmin() {
-  const cookie = (await cookies()).get(ADMIN_COOKIE)?.value;
-  if (!(await verifySession(cookie))) {
-    throw new Error("No autorizado");
-  }
-}
 
 export type LoginResult = { ok: false; error: string };
 
