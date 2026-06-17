@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 import { CheckCircle2, Copy } from "lucide-react";
 import { event, type DivisionKey } from "@/config/event.config";
+import type { CategoryCapacity } from "@/lib/stats";
 import { registerTeam } from "@/actions/registrations";
 import { whatsappUrl } from "@/lib/format";
 import { WhatsAppIcon } from "@/components/shared/icons";
@@ -18,7 +19,7 @@ import { cn } from "@/lib/utils";
 const selectCls =
   "flex h-11 w-full rounded-lg border border-input bg-secondary/40 px-3.5 text-base text-foreground focus-visible:outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-ring/40";
 
-export function RegistrationForm() {
+export function RegistrationForm({ capacity = {} }: { capacity?: CategoryCapacity }) {
   const params = useSearchParams();
   const initialCat =
     event.categories.find((c) => c.slug === params.get("cat"))?.slug ??
@@ -108,21 +109,32 @@ export function RegistrationForm() {
           1 · Categoría
         </legend>
         <div className="grid grid-cols-3 gap-3">
-          {event.categories.map((c) => (
-            <button
-              key={c.slug}
-              type="button"
-              onClick={() => setCategorySlug(c.slug)}
-              className={cn(
-                "rounded-xl border px-3 py-4 text-center transition-all",
-                categorySlug === c.slug
-                  ? "border-primary bg-primary/10 glow-orange"
-                  : "border-border bg-card/60 hover:border-primary/50"
-              )}
-            >
-              <span className="block font-display text-2xl font-black text-foreground sm:text-3xl">{c.name}</span>
-            </button>
-          ))}
+          {event.categories.map((c) => {
+            const isFull = capacity[c.slug]?.isFull ?? false;
+            return (
+              <button
+                key={c.slug}
+                type="button"
+                disabled={isFull}
+                onClick={() => !isFull && setCategorySlug(c.slug)}
+                className={cn(
+                  "rounded-xl border px-3 py-4 text-center transition-all",
+                  isFull
+                    ? "cursor-not-allowed border-border bg-card/40 opacity-50"
+                    : categorySlug === c.slug
+                      ? "border-primary bg-primary/10 glow-orange"
+                      : "border-border bg-card/60 hover:border-primary/50"
+                )}
+              >
+                <span className="block font-display text-2xl font-black text-foreground sm:text-3xl">{c.name}</span>
+                {isFull && (
+                  <span className="mt-1 block font-display text-[0.6rem] uppercase tracking-widest text-muted-foreground">
+                    {event.counter.fullLabel}
+                  </span>
+                )}
+              </button>
+            );
+          })}
         </div>
         <input type="hidden" name="category" value={categorySlug} />
       </fieldset>

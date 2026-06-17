@@ -47,7 +47,7 @@ export async function registerTeam(formData: FormData): Promise<RegisterResult> 
   // Resolve an OPEN tournament row for this format + division.
   const { data: tournament } = await supabase
     .from("tournaments")
-    .select("id, is_open")
+    .select("id, is_open, max_teams")
     .eq("format", categorySlug)
     .eq("division", division)
     .eq("is_open", true)
@@ -57,6 +57,18 @@ export async function registerTeam(formData: FormData): Promise<RegisterResult> 
 
   if (!tournament) {
     return { ok: false, error: "Esta categoría no está disponible por el momento." };
+  }
+
+  // Capacity check (count-then-insert; small race acceptable at this scale).
+  if (tournament.max_teams != null) {
+    const { count } = await supabase
+      .from("teams")
+      .select("id", { count: "exact", head: true })
+      .eq("tournament_id", tournament.id)
+      .neq("status", "cancelled");
+    if ((count ?? 0) >= tournament.max_teams) {
+      return { ok: false, error: "Esta categoría alcanzó su cupo máximo." };
+    }
   }
 
   const { data: team, error: teamErr } = await supabase

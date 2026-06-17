@@ -9,10 +9,10 @@ import { EventInfo } from "@/components/landing/event-info";
 import { FoodTeaser } from "@/components/landing/food-teaser";
 import { Sponsors } from "@/components/landing/sponsors";
 import { SiteFooter } from "@/components/landing/site-footer";
-import { getCategoryCounts } from "@/lib/stats";
+import { getCategoryCapacity } from "@/lib/stats";
 
 export default async function HomePage() {
-  const counts = await getCategoryCounts();
+  const capacity = await getCategoryCapacity();
 
   return (
     <main className="relative pb-20 sm:pb-0">
@@ -55,7 +55,7 @@ export default async function HomePage() {
 
       <Hero />
       <Countdown />
-      <Categories counts={counts} />
+      <Categories capacity={capacity} />
       <EventInfo />
       <FoodTeaser />
       <Sponsors />
