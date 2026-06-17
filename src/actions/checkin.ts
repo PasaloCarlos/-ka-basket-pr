@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { requireAdmin } from "@/lib/admin-guard";
+import { buildCheckinOrFilter } from "@/lib/checkin-search";
 import type { TeamWithDetails } from "@/types";
 
 const SELECT = "*, tournaments(name, format, division), players(name, jersey_number)";
@@ -27,7 +28,7 @@ export async function findTeamsForCheckin(query: string): Promise<TeamWithDetail
   const { data } = await supabase
     .from("teams")
     .select(SELECT)
-    .or(`lookup_code.eq.${clean.toUpperCase()},team_name.ilike.%${clean}%`)
+    .or(buildCheckinOrFilter(clean))
     .order("created_at", { ascending: false })
     .limit(25);
   return (data as TeamWithDetails[] | null) ?? [];
