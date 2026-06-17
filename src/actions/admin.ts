@@ -86,3 +86,16 @@ export async function deleteTeam(teamId: string) {
   revalidatePath("/admin");
   revalidatePath("/"); // eliminar baja el contador público
 }
+
+export async function setMaxTeams(tournamentId: string, max: number | null) {
+  await requireAdmin();
+  const supabase = createAdminClient();
+  const value = max != null && max > 0 ? Math.floor(max) : null;
+  const { error } = await supabase
+    .from("tournaments")
+    .update({ max_teams: value })
+    .eq("id", tournamentId);
+  if (error) throw new Error("Error al actualizar el cupo.");
+  revalidatePath("/admin");
+  revalidatePath("/");
+}
