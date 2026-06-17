@@ -77,6 +77,8 @@ export const event = {
     emptyLabel: "Sé el primer equipo", // cuando aún no hay inscritos
     oneLabel: "equipo inscrito",
     manyLabel: "equipos inscritos",
+    fullLabel: "Cupo lleno",
+    spotsLeftLabel: "cupos disponibles",
   },
 
   // Auspiciadores. Pon los logos en public/sponsors/ y referéncialos aquí.
@@ -87,6 +89,25 @@ export const event = {
     intro: "Gracias a quienes hacen posible este torneo.",
     ctaText: "¿Quieres auspiciar este evento?",
     items: [] as { name: string; logo: string; url?: string | null }[],
+  },
+
+  // Precio numérico OPCIONAL para el panel admin (cálculo de recaudo).
+  // Distinto de details.price (texto público). amount=null oculta el recaudo.
+  pricing: {
+    amount: null as number | null, // ej. 10
+    basis: "team" as "team" | "player", // ¿el precio es por equipo o por jugador?
+    currency: "$",
+  },
+
+  // Plantillas de WhatsApp para escribir a capitanes desde /admin.
+  // Variables disponibles: {team} {captain} {code} {category}
+  whatsappTemplates: {
+    confirmacion:
+      '¡Hola {captain}! Tu equipo "{team}" ({category}) quedó confirmado para el torneo 🏀. El pago se realiza en la entrada. Tu código es {code}.',
+    pago:
+      '¡Hola {captain}! Recordatorio: el pago de "{team}" se realiza en la puerta el día del evento. ¡Nos vemos!',
+    seguimiento:
+      '¡Hola {captain}! Te escribo sobre la inscripción de tu equipo "{team}" en el torneo 🏀.',
   },
 
   // Página pública del torneo (/torneo): brackets en vivo + reglas.

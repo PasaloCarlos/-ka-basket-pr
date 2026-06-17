@@ -22,6 +22,7 @@ export type Database = {
           sort_order: number | null;
           is_open: boolean | null;
           created_at: string;
+          max_teams: number | null;
         };
         Insert: {
           id?: string;
@@ -35,6 +36,7 @@ export type Database = {
           sort_order?: number | null;
           is_open?: boolean | null;
           created_at?: string;
+          max_teams?: number | null;
         };
         Update: {
           id?: string;
@@ -48,6 +50,7 @@ export type Database = {
           sort_order?: number | null;
           is_open?: boolean | null;
           created_at?: string;
+          max_teams?: number | null;
         };
         Relationships: [];
       };
@@ -68,6 +71,8 @@ export type Database = {
           lookup_code: string;
           created_at: string;
           updated_at: string;
+          checked_in: boolean;
+          checked_in_at: string | null;
         };
         Insert: {
           id?: string;
@@ -85,6 +90,8 @@ export type Database = {
           lookup_code?: string;
           created_at?: string;
           updated_at?: string;
+          checked_in?: boolean;
+          checked_in_at?: string | null;
         };
         Update: {
           id?: string;
@@ -102,6 +109,8 @@ export type Database = {
           lookup_code?: string;
           created_at?: string;
           updated_at?: string;
+          checked_in?: boolean;
+          checked_in_at?: string | null;
         };
         Relationships: [];
       };
