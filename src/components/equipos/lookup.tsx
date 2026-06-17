@@ -9,6 +9,7 @@ import type { TeamWithDetails, RegistrationStatus } from "@/types";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { LookupQr } from "@/components/shared/qr-code";
 
 const STATUS: Record<RegistrationStatus, { label: string; variant: "pending" | "confirmed" | "cancelled" }> = {
   pending: { label: "Pendiente", variant: "pending" },
@@ -117,7 +118,12 @@ export function TeamLookup() {
             </div>
           )}
 
-          <p className="mt-5 text-xs text-muted-foreground">{event.details.paymentNote}</p>
+          <div className="mt-6 flex flex-col items-center gap-3 border-t border-border pt-5">
+            <LookupQr code={team.lookup_code} />
+            <p className="text-center text-xs text-muted-foreground">
+              Muestra este código en la entrada. {event.details.paymentNote}
+            </p>
+          </div>
         </div>
       )}
     </div>

@@ -10,6 +10,7 @@ import type { CategoryCapacity } from "@/lib/stats";
 import { registerTeam } from "@/actions/registrations";
 import { whatsappUrl } from "@/lib/format";
 import { WhatsAppIcon } from "@/components/shared/icons";
+import { LookupQr } from "@/components/shared/qr-code";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
@@ -73,6 +74,9 @@ export function RegistrationForm({ capacity = {} }: { capacity?: CategoryCapacit
           {success}
           <Copy className="size-5 text-muted-foreground" />
         </button>
+        <div className="mt-6 flex justify-center">
+          <LookupQr code={success} />
+        </div>
         <div className="mt-6 rounded-xl border border-border bg-secondary/40 px-5 py-4 text-left text-sm text-muted-foreground">
           <p className="font-display text-xs uppercase tracking-widest text-primary">Próximos pasos</p>
           <ul className="mt-2 space-y-1.5">
