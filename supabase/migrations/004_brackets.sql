@@ -37,7 +37,7 @@ create table public.bracket_matches (
   id uuid primary key default gen_random_uuid(),
   bracket_id uuid not null references public.brackets(id) on delete cascade,
   round int not null,                 -- 1 = first round, increases toward final
-  position int not null,              -- 0-based within round
+  "position" int not null,            -- 0-based within round ("position" is a SQL keyword)
   team1_id uuid references public.teams(id) on delete set null,
   team2_id uuid references public.teams(id) on delete set null,
   team1_name text,                    -- snapshot; null = empty/bye slot
@@ -60,6 +60,6 @@ create table public.settings (
   updated_at timestamptz default now()
 );
 
-create index idx_bracket_matches_bracket on public.bracket_matches(bracket_id, round, position);
+create index idx_bracket_matches_bracket on public.bracket_matches(bracket_id, round, "position");
 create index idx_bracket_teams_bracket on public.bracket_teams(bracket_id);
 create index idx_brackets_published on public.brackets(is_published);
