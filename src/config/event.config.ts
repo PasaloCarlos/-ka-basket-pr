@@ -89,6 +89,16 @@ export const event = {
     items: [] as { name: string; logo: string; url?: string | null }[],
   },
 
+  // Página pública del torneo (/torneo): brackets en vivo + reglas.
+  tournament: {
+    enabled: true, // muestra /torneo y el enlace "Torneo" en el nav
+    navLabel: "Torneo",
+    pageTitle: "El Torneo",
+    pageIntro: "Brackets en vivo y reglas del torneo.",
+    rulesTitle: "Reglas del torneo",
+    bracketsEmptyLabel: "Los brackets se publicarán pronto.",
+  },
+
   countdown: { enabled: true }, // sólo se muestra si details.date tiene valor
 
   // Tokens de marca (documentación / reuso en TS).

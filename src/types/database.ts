@@ -132,12 +132,139 @@ export type Database = {
         };
         Relationships: [];
       };
+      brackets: {
+        Row: {
+          id: string;
+          name: string;
+          tournament_id: string | null;
+          status: "draft" | "active" | "completed";
+          is_published: boolean;
+          champion_team_id: string | null;
+          champion_name: string | null;
+          sort_order: number | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          name: string;
+          tournament_id?: string | null;
+          status?: "draft" | "active" | "completed";
+          is_published?: boolean;
+          champion_team_id?: string | null;
+          champion_name?: string | null;
+          sort_order?: number | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          name?: string;
+          tournament_id?: string | null;
+          status?: "draft" | "active" | "completed";
+          is_published?: boolean;
+          champion_team_id?: string | null;
+          champion_name?: string | null;
+          sort_order?: number | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      bracket_teams: {
+        Row: {
+          bracket_id: string;
+          team_id: string;
+          team_name: string;
+          seed: number;
+        };
+        Insert: {
+          bracket_id: string;
+          team_id: string;
+          team_name: string;
+          seed: number;
+        };
+        Update: {
+          bracket_id?: string;
+          team_id?: string;
+          team_name?: string;
+          seed?: number;
+        };
+        Relationships: [];
+      };
+      bracket_matches: {
+        Row: {
+          id: string;
+          bracket_id: string;
+          round: number;
+          position: number;
+          team1_id: string | null;
+          team2_id: string | null;
+          team1_name: string | null;
+          team2_name: string | null;
+          score1: number | null;
+          score2: number | null;
+          winner_team_id: string | null;
+          winner_name: string | null;
+          next_match_id: string | null;
+          next_slot: number | null;
+          is_bye: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          bracket_id: string;
+          round: number;
+          position: number;
+          team1_id?: string | null;
+          team2_id?: string | null;
+          team1_name?: string | null;
+          team2_name?: string | null;
+          score1?: number | null;
+          score2?: number | null;
+          winner_team_id?: string | null;
+          winner_name?: string | null;
+          next_match_id?: string | null;
+          next_slot?: number | null;
+          is_bye?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          bracket_id?: string;
+          round?: number;
+          position?: number;
+          team1_id?: string | null;
+          team2_id?: string | null;
+          team1_name?: string | null;
+          team2_name?: string | null;
+          score1?: number | null;
+          score2?: number | null;
+          winner_team_id?: string | null;
+          winner_name?: string | null;
+          next_match_id?: string | null;
+          next_slot?: number | null;
+          is_bye?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      settings: {
+        Row: { key: string; value: string | null; updated_at: string };
+        Insert: { key: string; value?: string | null; updated_at?: string };
+        Update: { key?: string; value?: string | null; updated_at?: string };
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;
     Enums: {
       registration_status: "pending" | "confirmed" | "cancelled";
       division_type: "female" | "male";
+      bracket_status: "draft" | "active" | "completed";
     };
     CompositeTypes: Record<string, never>;
   };

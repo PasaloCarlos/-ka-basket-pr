@@ -13,3 +13,8 @@ values
   ('2v2-male',   'Torneo 2 vs 2 - Masculino', '2v2', 2, 3, 'male',   'Abierta', 50, false),
   ('5v5-male',   'Torneo 5 vs 5 - Masculino', '5v5', 5, 8, 'male',   'Abierta', 60, false)
 on conflict (slug) do nothing;
+
+-- Initial rules-of-play placeholder (admin edits this from /admin/reglas).
+insert into public.settings (key, value)
+values ('rules_body', e'Reglas por confirmar.\n\n- 1v1: a 11 puntos (gana por 2)\n- 5v5: 2 periodos de 10 minutos\n- La decisión de los árbitros es final')
+on conflict (key) do nothing;
