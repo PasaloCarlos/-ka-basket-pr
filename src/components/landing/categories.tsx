@@ -1,15 +1,9 @@
 import Link from "next/link";
 import { event } from "@/config/event.config";
 import { buttonVariants } from "@/components/ui/button";
-import type { CategoryCounts } from "@/lib/stats";
+import type { CategoryCapacity } from "@/lib/stats";
 
-function countLabel(n: number): string {
-  const { emptyLabel, oneLabel, manyLabel } = event.counter;
-  if (n <= 0) return emptyLabel;
-  return `${n} ${n === 1 ? oneLabel : manyLabel}`;
-}
-
-export function Categories({ counts = {} }: { counts?: CategoryCounts }) {
+export function Categories({ capacity = {} }: { capacity?: CategoryCapacity }) {
   return (
     <section id="categorias" className="relative px-6 py-20">
       <div className="mx-auto max-w-5xl">
@@ -24,13 +18,15 @@ export function Categories({ counts = {} }: { counts?: CategoryCounts }) {
 
         <div className="stagger grid grid-cols-1 gap-5 sm:grid-cols-3">
           {event.categories.map((cat, i) => {
-            const n = counts[cat.slug] ?? 0;
+            const cap = capacity[cat.slug];
+            const n = cap?.count ?? 0;
+            const isFull = cap?.isFull ?? false;
+            const spotsLeft = cap?.spotsLeft ?? null;
             return (
               <article
                 key={cat.slug}
                 className="group relative overflow-hidden rounded-2xl border border-border bg-card/70 p-7 transition-all hover:border-primary/60 hover:glow-orange"
               >
-                {/* jersey-number watermark */}
                 <span className="pointer-events-none absolute -right-3 -top-7 select-none font-display text-[7rem] font-black leading-none text-primary/10 transition-colors group-hover:text-primary/20">
                   {String(i + 1).padStart(2, "0")}
                 </span>
@@ -42,11 +38,18 @@ export function Categories({ counts = {} }: { counts?: CategoryCounts }) {
 
                 {event.counter.enabled && (
                   <div className="mt-4 flex items-center gap-2 text-xs">
-                    <span className="inline-flex size-2 shrink-0 rounded-full bg-primary" />
+                    <span className={`inline-flex size-2 shrink-0 rounded-full ${isFull ? "bg-muted-foreground" : "bg-primary"}`} />
                     <span className="font-display uppercase tracking-widest text-foreground">
-                      {countLabel(n)}
+                      {isFull
+                        ? event.counter.fullLabel
+                        : n <= 0
+                          ? event.counter.emptyLabel
+                          : `${n} ${n === 1 ? event.counter.oneLabel : event.counter.manyLabel}`}
                     </span>
-                    {n > 0 && (
+                    {!isFull && spotsLeft != null && spotsLeft > 0 && (
+                      <span className="text-muted-foreground">· {spotsLeft} {event.counter.spotsLeftLabel}</span>
+                    )}
+                    {!isFull && spotsLeft == null && n > 0 && (
                       <span className="text-muted-foreground">· {event.counter.scarcityLabel}</span>
                     )}
                   </div>
@@ -54,9 +57,14 @@ export function Categories({ counts = {} }: { counts?: CategoryCounts }) {
 
                 <Link
                   href={`/registro?cat=${cat.slug}`}
-                  className={buttonVariants({ variant: "outline", size: "sm", className: "mt-6 w-full" })}
+                  aria-disabled={isFull}
+                  className={buttonVariants({
+                    variant: "outline",
+                    size: "sm",
+                    className: `mt-6 w-full ${isFull ? "pointer-events-none opacity-50" : ""}`,
+                  })}
                 >
-                  Inscribir {cat.name}
+                  {isFull ? event.counter.fullLabel : `Inscribir ${cat.name}`}
                 </Link>
               </article>
             );

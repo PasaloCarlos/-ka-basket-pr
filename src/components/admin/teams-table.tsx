@@ -9,6 +9,8 @@ import { event } from "@/config/event.config";
 import type { TeamWithDetails, RegistrationStatus } from "@/types";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { captainWhatsappUrl, type WhatsAppTemplateKey } from "@/lib/whatsapp";
+import { WhatsAppIcon } from "@/components/shared/icons";
 
 const STATUS_LABEL: Record<RegistrationStatus, string> = {
   pending: "Pendiente",
@@ -28,6 +30,47 @@ function Stat({ label, value }: { label: string; value: number }) {
     <div className="rounded-xl border border-border bg-card/70 px-5 py-4">
       <p className="font-display text-4xl font-black text-primary tabular-nums">{value}</p>
       <p className="font-display text-xs uppercase tracking-widest text-muted-foreground">{label}</p>
+    </div>
+  );
+}
+
+const WA_ITEMS: { key: WhatsAppTemplateKey; label: string }[] = [
+  { key: "confirmacion", label: "Confirmación" },
+  { key: "pago", label: "Recordatorio de pago" },
+  { key: "seguimiento", label: "Seguimiento general" },
+];
+
+function WhatsAppMenu({ team }: { team: TeamWithDetails }) {
+  const [open, setOpen] = useState(false);
+  // If the captain phone has no usable digits, hide the control entirely.
+  if (!captainWhatsappUrl(team, "seguimiento")) return null;
+  return (
+    <div className="relative">
+      <Button size="sm" variant="ghost" onClick={() => setOpen((v) => !v)}>
+        <WhatsAppIcon className="size-4 text-[#25D366]" /> WhatsApp
+      </Button>
+      {open && (
+        <>
+          <div className="fixed inset-0 z-10" onClick={() => setOpen(false)} />
+          <div className="absolute z-20 mt-1 w-56 overflow-hidden rounded-xl border border-border bg-card shadow-lg">
+            {WA_ITEMS.map((item) => {
+              const url = captainWhatsappUrl(team, item.key)!;
+              return (
+                <a
+                  key={item.key}
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setOpen(false)}
+                  className="block px-4 py-2.5 text-sm text-foreground hover:bg-secondary/60"
+                >
+                  {item.label}
+                </a>
+              );
+            })}
+          </div>
+        </>
+      )}
     </div>
   );
 }
@@ -139,6 +182,7 @@ export function TeamsTable({ teams }: { teams: TeamWithDetails[] }) {
               {team.notes && <p className="mt-2 text-sm italic text-muted-foreground">“{team.notes}”</p>}
 
               <div className="mt-4 flex flex-wrap gap-2">
+                <WhatsAppMenu team={team} />
                 {team.status !== "confirmed" && (
                   <Button size="sm" disabled={pending} onClick={() => act(() => confirmTeam(team.id, "confirmed"), "Equipo confirmado")}>
                     <Check className="size-4" /> Confirmar

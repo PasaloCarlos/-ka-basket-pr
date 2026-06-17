@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import Link from "next/link";
 import { event } from "@/config/event.config";
 import { isRegistrationOpen } from "@/lib/deadline";
+import { getCategoryCapacity } from "@/lib/stats";
 import { PageShell } from "@/components/shared/page-shell";
 import { buttonVariants } from "@/components/ui/button";
 import { RegistrationForm } from "@/components/registro/registration-form";
@@ -10,8 +11,11 @@ export const metadata = {
   title: `Inscripción — ${event.brand.name}`,
 };
 
-export default function RegistroPage() {
+export const dynamic = "force-dynamic";
+
+export default async function RegistroPage() {
   const open = isRegistrationOpen();
+  const capacity = open ? await getCategoryCapacity() : {};
 
   return (
     <PageShell
@@ -25,11 +29,9 @@ export default function RegistroPage() {
     >
       {open ? (
         <Suspense
-          fallback={
-            <p className="text-center text-muted-foreground">Cargando formulario...</p>
-          }
+          fallback={<p className="text-center text-muted-foreground">Cargando formulario...</p>}
         >
-          <RegistrationForm />
+          <RegistrationForm capacity={capacity} />
         </Suspense>
       ) : (
         <div className="mx-auto max-w-lg rounded-2xl border border-border bg-card/70 p-8 text-center">
